@@ -5,6 +5,7 @@ echo "Preparing folder init and creating ./init/initdb.sql"
 mkdir -p ./nginx/ssl && chmod -R +x ./init
 
 # Fix postgres by adding chmod 755 init/initdb.sql
+mkdir init
 docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./init/initdb.sql && chmod 755 init/initdb.sql
 echo "done"
 
