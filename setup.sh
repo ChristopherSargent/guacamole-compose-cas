@@ -1,16 +1,16 @@
 #!/bin/sh
 # Create folders
 echo "Preparing folder init and creating ./init/initdb.sql"
-#mkdir ./init && 
+mkdir ./init 
 mkdir -p ./nginx/ssl && chmod -R +x ./init
 
 # Fix postgres by adding chmod 755 init/initdb.sql
-docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgres > ./init/initdb.sql && chmod 755 init/initdb.sql
+docker run --rm guacamole/guacamole /opt/guacamole/bin/initdb.sh --postgresql > ./init/initdb.sql && chmod 755 init/initdb.sql
 echo "done"
 
 # Create SSL certs
 echo "Creating SSL certificates"
-openssl req -nodes -newkey rsa:4096 -new -x509 -keyout nginx/ssl/self-ssl.key -out nginx/ssl/self.cert -subj '/C=US/ST=VA/L=Reston/O=SWC/OU=SWC/CN=lan-us-adm3.na.anccorp.com'
+openssl req -nodes -newkey rsa:4096 -new -x509 -keyout nginx/ssl/self-ssl.key -out nginx/ssl/self.cert -subj '/C=US/ST=VA/L=Reston/O=SWC/OU=SWC/CN=FQDN'
 echo "You can use your own certificates by placing the private key in nginx/ssl/self-ssl.key and the cert in nginx/ssl/self.cert"
 echo "done"
 

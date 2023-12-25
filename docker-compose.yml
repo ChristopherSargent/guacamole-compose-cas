@@ -28,7 +28,7 @@ networks:
 services:
   # guacd
   guacd:
-    container_name: guacd_compose
+    container_name: cas_guacd_compose
     image: guacamole/guacd
     networks:
       guacnetwork_compose:
@@ -38,7 +38,7 @@ services:
     - ./record:/record:rw
   # postgres
   postgres:
-    container_name: postgres_guacamole_compose
+    container_name: cas_postgres_guacamole_compose
     environment:
       PGDATA: /var/lib/postgresql/data/guacamole
       POSTGRES_DB: guacamole_db
@@ -55,7 +55,7 @@ services:
 
   # guacamole
   guacamole:
-    container_name: guacamole_compose
+    container_name: cas_guacamole_compose
     depends_on:
     - guacd
     - postgres
@@ -65,6 +65,7 @@ services:
       POSTGRES_HOSTNAME: postgres
       POSTGRES_PASSWORD: 31nst31n
       POSTGRES_USER: guacamole_user
+      TOTP_ENABLED: 'true' 
     image: guacamole/guacamole
     links:
     - guacd
@@ -80,7 +81,7 @@ services:
 ########### optional ##############
   # nginx
   nginx:
-   container_name: nginx_guacamole_compose
+   container_name: cas_nginx_guacamole_compose
    restart: always
    image: nginx
    volumes:
